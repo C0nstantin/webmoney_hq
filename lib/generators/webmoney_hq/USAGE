@@ -1,0 +1,13 @@
+Description:
+   Generator for webmoney HQ
+
+Example:
+    rails generate webmoney_hq:install NAME
+    NAME unique name for model
+
+    This will create:
+        /db/migrate/[]_create_webmoney_hq_hqs.rb
+        /db/migrate/[]_create_ulog.rb
+        /app/models/[NAME].rb
+        /config/initialize/webmoney_hq.rb
+

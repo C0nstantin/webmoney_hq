@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-16"?>
+<wm.servicemonitor>
+  <metadata 
+    sitename="<%=WebmoneyHq.sitename%>" 
+    siteurl="<%=WebmoneyHq.siteurl%>" 
+    sitexmlurl="<%= "#{WebmoneyHq.siteurl}#{hq_path}" %>" 
+    masterwmid="<%=WebmoneyHq.masterwmid%>" 
+    actualdate="<%=@date_start%>" 
+    encoding="UTF-8">
+    <%- if @requests.present? %>
+      <%- @requests.each do |req| %>
+        <request daterequest="<%=req.daterequest%>" activeuser_daily="<%=req.activeuser_daily%>" activeuser_weekly="<%=req.activeuser_weekly%>" activeuser_monthly="<%=req.activeuser_monthly%>" operations="<%=req.operations%>">
+          <%- req.items.each do |item| %>
+            <item count="<%=item.count%>" operation_id="<%=item.operation_id%>" daterequest="<%=item.daterequest%>" description="<%=item.description%>" />
+          <% end -%>
+        </request>
+      <% end -%>
+    <% end -%>
+  </metadata>
+</wm.servicemonitor>

@@ -1,0 +1,14 @@
+
+one:
+  daterequest: 2014-01-01
+  activeuser_daily: 1
+  activeuser_monthly: 10
+  activeuser_weekly: 20
+
+
+two:
+  daterequest: 2014-01-02
+  activeuser_daily: 2
+  activeuser_monthly: 13
+  activeuser_weekly: 23
+
