@@ -83,15 +83,15 @@ module WebmoneyHq
     end
 
     def activeuser_daily
-      self.activeuser.where(created_at: @daterequest-1.day..@daterequest)
+      self.activeuser.where(created_at: @daterequest-1.day..@daterequest).count
     end
 
     def activeuser_weekly
-      self.activeuser.where(created_at: @daterequest-1.week..@daterequest)
+      self.activeuser.where(created_at: @daterequest-1.week..@daterequest).count
     end
 
     def activeuser_monthly
-      self.activeuser.where(created_at: @daterequest-1.month..@daterequest)
+      self.activeuser.where(created_at: @daterequest-1.month..@daterequest).count
     end
 
     def create_request
