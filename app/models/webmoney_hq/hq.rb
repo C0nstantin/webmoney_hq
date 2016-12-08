@@ -25,13 +25,6 @@ module WebmoneyHq
 
     @@options = []
 
-    def initialize(daterequest="")
-      if daterequest.blank? or daterequest.to_date > Date.today
-        @daterequest=DateTime.now.to_date
-      else
-        @daterequest=daterequest.to_date
-      end
-    end
 
     class <<self
 
@@ -75,6 +68,17 @@ module WebmoneyHq
       def rebuild_all_requests
         WebmoneyHq.date_start
       end
+
+    end
+
+    def initialize(daterequest="")
+      if daterequest.blank? or daterequest.to_date > Date.today
+        @daterequest=DateTime.now.to_date
+      else
+        @daterequest=daterequest.to_date
+      end
+
+      @daterequest = @daterequest - 1.day
     end
 
 
@@ -114,7 +118,7 @@ module WebmoneyHq
     end
 
     def update_request
-      request = Request.find_by(daterequest:@daterequest);
+      request = Request.find_by(daterequest: @daterequest);
       request.destroy if request.present?
       self.create_request
     end
@@ -122,6 +126,6 @@ module WebmoneyHq
     def get_request
       Request.find_by(datereqeust: @daterequest)
     end
-  end
 
+  end
 end
