@@ -64,11 +64,6 @@ module WebmoneyHq
           s.create_request
         end
       end
-
-      def rebuild_all_requests
-        WebmoneyHq.date_start
-      end
-
     end
 
     def initialize(daterequest="")
@@ -111,7 +106,7 @@ module WebmoneyHq
         Item.create!(
           daterequest: @daterequest,
           description: opt[:description],
-          count: self.send(opt[:def],@daterequest),
+          count: self.send(opt[:def]),
           operation_id: opt[:id],
         )
       end
