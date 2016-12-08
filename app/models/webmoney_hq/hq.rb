@@ -78,24 +78,24 @@ module WebmoneyHq
         @daterequest=daterequest.to_date
       end
 
-      @daterequest = @daterequest - 1.day
+      #@daterequest = @daterequest - 1.day
     end
 
 
     def activeuser
-      WebmoneyHq::Ulog.distinct
+      WebmoneyHq::Ulog.select("distinct user_id")
     end
 
     def activeuser_daily
-      self.activeuser.where(created_at: @daterequest-1.day..@daterequest).count
+      self.activeuser.where(created_at: @daterequest..@daterequest+1.day).count
     end
 
     def activeuser_weekly
-      self.activeuser.where(created_at: @daterequest-1.week..@daterequest).count
+      self.activeuser.where(created_at: @daterequest-1.week..@daterequest+1.day).count
     end
 
     def activeuser_monthly
-      self.activeuser.where(created_at: @daterequest-1.month..@daterequest).count
+      self.activeuser.where(created_at: @daterequest-1.month..@daterequest+1.day).count
     end
 
     def create_request
