@@ -9,7 +9,7 @@ module WebmoneyHq
 
     BadRequest = Class.new(StandardError)
     rescue_from ApplicationController::BadRequest do |exception|
-      render_error_page(status: 400, text: 'lastupdate more yesterday')
+      render_error_page(status: 400, text: 'lastupdate incorrect')
     end
 
     private

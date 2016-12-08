@@ -4,7 +4,7 @@ module WebmoneyHq
     before_action :check_permission
 
     def index
-      if Date.parse(params[:lastupdate]) > Date.yesterday
+      if params[:lastupdate].blank? || Date.parse(params[:lastupdate]) > Date.yesterday
         raise ApplicationController::BadRequest
       end
 
