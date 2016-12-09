@@ -28,12 +28,21 @@ module WebmoneyHq
 
     class <<self
 
-      def option(id, description, defenition)
+      def option(id, description, defenition,params={})
+
+        canaggregate = !(params[:canaggregate].nil?) ?  params[:canaggregate] : nil
+        amount = params[:amount].present? ? params[:amount] : nil
+        istransaction = !(params[:istransaction].nil?) ? params[:istransaction] : nil
+        wmcurrency= params[:wmcurrency].present? ? params[:wmcurrency] : nil
 
         @@options << {
           id: id.to_i,
           description: description.to_s,
-          def: defenition
+          def: defenition,
+          canaggregate: canaggregate,
+          amount: amount,
+          istransaction: istransaction,
+          wmcurrency: wmcurrency
         }
       end
 
@@ -82,15 +91,18 @@ module WebmoneyHq
     end
 
     def activeuser_daily
-      self.activeuser.where(created_at: @daterequest..@daterequest+1.day).count
+      self.activeuser.
+        where(created_at: @daterequest..@daterequest+1.day).count
     end
 
     def activeuser_weekly
-      self.activeuser.where(created_at: @daterequest-1.week..@daterequest+1.day).count
+      self.activeuser.
+        where(created_at: @daterequest-1.week..@daterequest+1.day).count
     end
 
     def activeuser_monthly
-      self.activeuser.where(created_at: @daterequest-1.month..@daterequest+1.day).count
+      self.activeuser.
+        where(created_at: @daterequest-1.month..@daterequest+1.day).count
     end
 
     def create_request
@@ -103,12 +115,21 @@ module WebmoneyHq
       })
 
       @@options.each do |opt|
-        Item.create!(
-          daterequest: @daterequest,
+          result = {daterequest: @daterequest,
           description: opt[:description],
           count: self.send(opt[:def]),
-          operation_id: opt[:id],
-        )
+          operation_id: opt[:id]}
+          result[:canaggregate] =
+            opt[:canaggregate] unless opt[:canaggregate].nil?
+
+          result[:istransaction] =
+            opt[:istransaction] unless opt[:istransaction].nil?
+
+          result[:amount] =
+            self.send(opt[:def].to_s + '_amount') if opt[:amount].present?
+
+          result[:wmcurrency] = opt[:wmcurrency] if opt[:wmcurrency].present?
+        Item.create!(result)
       end
     end
 

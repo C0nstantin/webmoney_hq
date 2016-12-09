@@ -37,12 +37,18 @@ module WebmoneyHq
 
               }) do
                 req.items.each do |item|
-                  xml.item({
+                    it = {
                     count: item.count,
                     operation_id: item.operation_id,
                     daterequest:  item.daterequest,
                     description:  item.description
-                  })
+                  }
+                  it[:canaggregate]  = item.canaggregate ? 1 : 0 unless item.canaggregate.nil?
+                  it[:istransaction] = item.istransaction ? 1 : 0  unless item.istransaction.nil?
+                  it[:amount]        = item.amount unless item.amount.nil?
+                  it[:wmcurrency]    = item.wmcurrency unless item.wmcurrency.nil?
+
+                  xml.item(it)
                 end
               end
             end
@@ -58,7 +64,7 @@ module WebmoneyHq
       return if Rails.env.development?
       raise ApplicationController::NotAuthorized if  params[:hash].blank?
 
-      hash = Digest::MD5.hexdigest(params[:lastupdate].to_s + WebmoneyHq.http_authentication_key)
+      hash = Digest::MD5.hexdigest(params[:lastupdate].to_s + WebmoneyHq.http_authentication_key.upcase)
       raise ApplicationController::NotAuthorized  unless hash == params[:hash]
     end
 
