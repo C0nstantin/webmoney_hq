@@ -6,7 +6,9 @@ module WebmoneyHq
     def operations
       oper = 0
       self.items.each do |i|
-        oper += i.count
+        if items.canaggregate != false
+          oper += i.count
+        end
       end
       oper
     end

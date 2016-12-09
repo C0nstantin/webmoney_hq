@@ -19,7 +19,7 @@ module WebmoneyHq
       @requests= Request.where(daterequest: @date_start-7.day .. @date_start)
       builder = Nokogiri::XML::Builder.new do |xml|
         xml.send(:"wm.servicemonitor") do
-          xml.metadate({
+          xml.metadata({
             sitename: WebmoneyHq.sitename,
             siteurl: WebmoneyHq.siteurl,
             sitexmlurl: "#{WebmoneyHq.siteurl}#{hq_path}",
