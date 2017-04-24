@@ -15,6 +15,7 @@ module WebmoneyHq
         else
           WebmoneyHq.date_start
         end
+
       @date_end =
         if @date_start + 7.day < Date.yesterday
           @date_start + 7.day
@@ -22,7 +23,7 @@ module WebmoneyHq
           Date.yesterday
         end
 
-      @requests= Request.where(daterequest: @date_start-7.day .. @date_start)
+      @requests= Request.where(daterequest: @date_start .. @date_end)
       builder = Nokogiri::XML::Builder.new do |xml|
         xml.send(:"wm.servicemonitor") do
           xml.metadata({
