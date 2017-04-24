@@ -15,6 +15,12 @@ module WebmoneyHq
         else
           WebmoneyHq.date_start
         end
+      @date_end =
+        if @date_start + 7.day < Date.yesterday
+          @date_start + 7.day
+        else
+          Date.yesterday
+        end
 
       @requests= Request.where(daterequest: @date_start-7.day .. @date_start)
       builder = Nokogiri::XML::Builder.new do |xml|
