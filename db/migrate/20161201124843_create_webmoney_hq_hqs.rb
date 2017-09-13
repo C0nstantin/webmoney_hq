@@ -15,7 +15,7 @@ class CreateWebmoneyHqHqs < ActiveRecord::Migration #[5.0]
       t.text      :description
       t.boolean   :istransaction
       t.boolean   :canaggregate
-      t.decimal   :amount,    precision: 5, scale: 2
+      t.decimal   :amount,    precision: 15, scale: 2
       t.string    :wmcurrency
     end
 
