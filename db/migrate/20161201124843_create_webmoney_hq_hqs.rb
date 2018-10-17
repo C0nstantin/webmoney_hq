@@ -1,4 +1,4 @@
-class CreateWebmoneyHqHqs < ActiveRecord::Migration #[5.0]
+class CreateWebmoneyHqHqs < ActiveRecord::Migration [5.0]
   def change
     create_table :webmoney_hq_requests do |t|
       t.date    :daterequest

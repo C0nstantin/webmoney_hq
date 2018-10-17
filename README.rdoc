@@ -1,5 +1,70 @@
-= WebmoneyHq
+# WebmoneyHq
 
-This project rocks and uses MIT-LICENSE.
-= @TODO
-Write documentation.
+This project implementation webmoney hq client for hq.webmoney.ru api
+
+## Install 
+Add this line to your application's Gemfile:
+```ruby
+gem 'webmoney_hq', git: 'https://github.com/C0nstantin/webmoney_hq'
+```
+
+```bash
+bunlde install
+```
+
+```bash
+rails g webmoney_hq:install Hq 
+rake db:migrate
+```
+
+in config/initialize/hq.rb
+```ruby
+WebmoneyHq.setup do |config|
+  config.http_authentication_key = 'code'
+  config.sitename = "service name"
+  config.siteurl = "https://serviceurl"
+  config.masterwmid = "wmid\d{12}"
+  config.date_start = Date.new(2016,11,1)
+end
+
+```
+
+
+write in app/models/hq.rb
+
+```ruby
+class Hq < WebmoneyHq::Hq
+  option 1, "Name for first option", :name1
+  option 2, "Name option 2", :name2
+  option 3, "Name option 3", :name3
+  option 4, "Name option 4", :name4
+  
+  def name1
+    //some calculations  and return result how numeric
+  end
+   
+  def name2
+    //some calculations  and return result how numeric
+  end
+
+  def name3
+    //some calculations  and return result how numeric
+  end
+
+  def name4
+    //some calculations  and return result how numeric
+  end
+end
+```
+
+* sart for every day for generation new statistic
+
+```bash
+rake hq:create_last_request 
+```
+
+* start for rebuild 
+```bash
+rake hq:rebuild_all
+```
+
